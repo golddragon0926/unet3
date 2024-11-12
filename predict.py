@@ -3,6 +3,7 @@ Prediction script used to visualize model output
 """
 import os
 import hydra
+import cv2
 from omegaconf import DictConfig
 
 import data_generator
@@ -47,6 +48,9 @@ def predict(cfg: DictConfig):
         mask_available = False
 
     showed_images = 0
+    save_dir = cfg.SAVE_DIR  # 예측 결과를 저장할 디렉토리 경로
+    os.makedirs(save_dir, exist_ok=True)  # 디렉토리가 없으면 생성
+
     for batch_data in val_generator:  # for each batch
         batch_images = batch_data[0]
         if mask_available:
@@ -75,11 +79,7 @@ def predict(cfg: DictConfig):
                 mask = postprocess_mask(mask)
                 mask = denormalize_mask(mask, cfg.OUTPUT.CLASSES)
 
-            # if np.unique(mask).shape[0] == 2:
-            if mask_available:
-                display([image, mask, prediction], show_true_mask=True)
-            else:
-                display([image, prediction], show_true_mask=False)
+            cv2.imwrite(os.path.join(save_dir, f"prediction_{showed_images}.png"), prediction)
 
             showed_images += 1
         # stop after displaying below number of images

@@ -47,13 +47,11 @@ def prepare_mask(path: str, resize: dict, normalize_mask: dict):
         Prepare mask for model.
         read mask --> resize --> normalize --> return as int32
         """
-    mask = read_image(path, cv2.IMREAD_GRAYSCALE)
+    mask = read_image(path, cv2.IMREAD_COLOR)
 
     if resize.VALUE:
         mask = resize_image(mask, resize.HEIGHT, resize.WIDTH, cv2.INTER_NEAREST)
 
-    if normalize_mask.VALUE:
-        mask = mask / normalize_mask.NORMALIZE_VALUE
 
     mask = mask.astype(np.int32)
 
@@ -84,9 +82,25 @@ def denormalize_mask(mask, classes):
     """
     Denormalize mask by multiplying each class with higher
     integer (255 / classes) for better visualization.
+    You can modify it to assign specific RGB colors for each class.
     """
-    mask = mask * (255 / classes)
-    return mask.astype(np.int32)
+    # Define a color palette for the classes
+    color_map = {
+        0: [0, 255, 0],       # Class 0: Green
+        1: [124, 10, 4],      # Class 1: Red
+        # Add more classes if needed
+    }
+
+    # Initialize the denormalized mask with the shape (height, width, 3) for RGB
+    denormalized_mask = np.zeros((mask.shape[0], mask.shape[1], 3), dtype=np.uint8)
+
+    # Vectorized approach to map classes to colors
+    for class_id, color in color_map.items():
+        denormalized_mask[mask == class_id] = color
+
+    # If there are any undefined classes, they will be black by default (already initialized as [0, 0, 0])
+
+    return denormalized_mask
 
 
 def display(display_list, show_true_mask=False):
