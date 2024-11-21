@@ -10,15 +10,12 @@ from utils.general_utils import join_paths, get_data_paths
 from utils.images_utils import prepare_image, prepare_mask, image_to_mask_name
 
 
-def assign_class_to_mask(mask):
-    # print("mask = ", mask)
+def assign_class_to_mask(mask, cfg):
     """
     주어진 마스크에서 각 색상값을 클래스 번호로 할당합니다.
     """
     class_map = {
-        (0, 255, 0): 0,  # 배경: 검정
-        (124, 10, 4): 1,  # 빨간색: 클래스 1
-        # (0, 255, 0): 2,  # 초록색: 클래스 2
+        tuple(v): k for k, v in cfg.CLASS_COLOR_MAP.items()
     }
 
     # 마스크 이미지에서 각 색상값을 찾아 해당 클래스 번호를 할당합니다.
@@ -122,7 +119,7 @@ class DataGenerator(tf.keras.utils.Sequence):
                 )
 
                 # 색상-클래스 매핑을 적용하여 마스크 변환
-                mask = assign_class_to_mask(mask)
+                mask = assign_class_to_mask(mask, self.cfg)
 
             # numpy to tensorflow conversion
             if self.mask_available:

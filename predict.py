@@ -71,13 +71,14 @@ def predict(cfg: DictConfig):
             # do postprocessing on predicted mask
             prediction = batch_predictions[index]
             prediction = postprocess_mask(prediction)
+
             # denormalize mask for better visualization
-            prediction = denormalize_mask(prediction, cfg.OUTPUT.CLASSES)
+            prediction = denormalize_mask(prediction, cfg)
 
             if mask_available:
                 mask = batch_mask[index]
                 mask = postprocess_mask(mask)
-                mask = denormalize_mask(mask, cfg.OUTPUT.CLASSES)
+                mask = denormalize_mask(mask, cfg)
 
             cv2.imwrite(os.path.join(save_dir, f"prediction_{showed_images}.png"), prediction)
 

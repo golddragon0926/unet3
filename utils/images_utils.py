@@ -78,18 +78,12 @@ def postprocess_mask(mask):
     return mask.astype(np.int32)
 
 
-def denormalize_mask(mask, classes):
+def denormalize_mask(mask, cfg):
     """
-    Denormalize mask by multiplying each class with higher
-    integer (255 / classes) for better visualization.
-    You can modify it to assign specific RGB colors for each class.
+    Denormalize mask by mapping class IDs to RGB colors for better visualization.
     """
     # Define a color palette for the classes
-    color_map = {
-        0: [0, 255, 0],       # Class 0: Green
-        1: [124, 10, 4],      # Class 1: Red
-        # Add more classes if needed
-    }
+    color_map = {k: v for k, v in cfg.CLASS_COLOR_MAP.items()}
 
     # Initialize the denormalized mask with the shape (height, width, 3) for RGB
     denormalized_mask = np.zeros((mask.shape[0], mask.shape[1], 3), dtype=np.uint8)

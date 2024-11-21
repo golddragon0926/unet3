@@ -2,6 +2,10 @@
 WORK_DIR: ${hydra:runtime.cwd}
 SAVE_DIR: ${WORK_DIR}/results  # 결과 저장 디렉토리 설정
 
+CLASS_COLOR_MAP:
+  0 : [0, 255, 0]  # [RGB, CLASS_ID]
+  1 : [124, 10, 4]
+
 DATA_PREPARATION:
   # unprocessed LiTS scan data paths, for custom data training skip this section details
   SCANS_TRAIN_DATA_PATH: "/data/Training Batch 2/"
@@ -49,7 +53,7 @@ OUTPUT:
 
 
 HYPER_PARAMETERS:
-  EPOCHS: 5
+  EPOCHS: 1
   BATCH_SIZE: 2  # specify per gpu batch size
   LEARNING_RATE: 3e-4  # 1e-3
 
