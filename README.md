@@ -32,7 +32,7 @@ versions too.
 * Clone code
 
 ```
-git clone https://github.com/hamidriasat/UNet-3-Plus.git UNet3P
+git clone https://github.com/golddragon0926/unet3.git UNet3P
 cd UNet3P
 ```
 
