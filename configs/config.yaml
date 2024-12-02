@@ -53,7 +53,7 @@ OUTPUT:
 
 
 HYPER_PARAMETERS:
-  EPOCHS: 1
+  EPOCHS: 50
   BATCH_SIZE: 2  # specify per gpu batch size
   LEARNING_RATE: 3e-4  # 1e-3
 
@@ -68,8 +68,8 @@ CALLBACKS:
 
   MODEL_CHECKPOINT:
     PATH: "/checkpoint"
-    SAVE_WEIGHTS_ONLY: True
-    SAVE_BEST_ONLY: True
+    SAVE_WEIGHTS_ONLY: False
+    SAVE_BEST_ONLY: False
 
   CSV_LOGGER:
     PATH: "/checkpoint"
