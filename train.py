@@ -104,7 +104,7 @@ def train(cfg: DictConfig):
     checkpoint_path = join_paths(
         cfg.WORK_DIR,
         cfg.CALLBACKS.MODEL_CHECKPOINT.PATH,
-        f"{cfg.MODEL.WEIGHTS_FILE_NAME}_epoch_{{epoch:02d}}.hdf5"
+        f"{cfg.MODEL.WEIGHTS_FILE_NAME}_epoch_{{epoch:02d}}.hdf5"  # {epoch} 그대로 유지
     )
     print("Weights path\n" + checkpoint_path)
 
