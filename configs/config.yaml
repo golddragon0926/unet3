@@ -3,7 +3,7 @@ WORK_DIR: ${hydra:runtime.cwd}
 SAVE_DIR: ${WORK_DIR}/results  # 결과 저장 디렉토리 설정
 
 CLASS_COLOR_MAP:
-  0 : [0, 255, 0]  # [RGB, CLASS_ID]
+  0 : [0, 255, 0]  # [BGR, CLASS_ID]
   1 : [124, 10, 4]
 
 DATA_PREPARATION:
@@ -41,15 +41,13 @@ SHOW_CENTER_CHANNEL_IMAGE: False  # only true for UNet3+ for custom dataset it s
 
 # Model input shape
 INPUT:
-#  HEIGHT: 320
-#  WIDTH: 320
   HEIGHT: 512
   WIDTH: 512
   CHANNELS: 3
 
 # Model output classes
 OUTPUT:
-  CLASSES: 3
+  CLASSES: 2
 
 
 HYPER_PARAMETERS:

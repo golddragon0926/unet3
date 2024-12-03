@@ -67,11 +67,6 @@ def train(cfg: DictConfig):
     train_generator = data_generator.DataGenerator(cfg, mode="TRAIN")
     val_generator = data_generator.DataGenerator(cfg, mode="VAL")
 
-    # verify generator
-    # for i, (batch_images, batch_mask) in enumerate(val_generator):
-    #     print(len(batch_images))
-    #     if i >= 3: break
-
     # optimizer
     # TODO update optimizer
     optimizer = tf.keras.optimizers.Adam(
@@ -109,7 +104,7 @@ def train(cfg: DictConfig):
     checkpoint_path = join_paths(
         cfg.WORK_DIR,
         cfg.CALLBACKS.MODEL_CHECKPOINT.PATH,
-        f"{cfg.MODEL.WEIGHTS_FILE_NAME}.hdf5"
+        f"{cfg.MODEL.WEIGHTS_FILE_NAME}_epoch_{{epoch:02d}}.hdf5"
     )
     print("Weights path\n" + checkpoint_path)
 
