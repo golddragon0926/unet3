@@ -82,6 +82,17 @@ def predict(cfg: DictConfig):
 
             cv2.imwrite(os.path.join(save_dir, f"prediction_{showed_images}.png"), prediction)
 
+            # Example using cv2.convertScaleAbs
+            image = cv2.convertScaleAbs(image * 255)  # Convert the float to uint8
+            colored_prediction = cv2.convertScaleAbs(prediction)  # If it's float, scale and convert
+
+            # Add weighted images
+            combined_image = cv2.addWeighted(image, 0.3, colored_prediction, 0.7, 0)
+
+            # Save the combined image
+            combined_image_path = os.path.join(save_dir, f"combined_{showed_images}.png")
+            cv2.imwrite(combined_image_path, combined_image)
+
             showed_images += 1
         # stop after displaying below number of images
         # if showed_images >= 10: break
