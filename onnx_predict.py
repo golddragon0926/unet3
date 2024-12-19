@@ -55,7 +55,7 @@ def process_image(image_file):
     output_image = cv2.resize(output_image, (image.shape[1], image.shape[0]))
 
     # 원본 이미지와 예측 결과 합치기
-    combined_image = cv2.addWeighted(image_rgb, 0.7, output_image, 0.3, 0)
+    combined_image = cv2.addWeighted(image_rgb, 0.3, output_image, 0.7, 0)
 
     # 결과 저장 (예측된 이미지)
     original_name = os.path.basename(image_file)
